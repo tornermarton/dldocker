@@ -1,0 +1,13 @@
+git
+wget
+openssh-server
+supervisor
+tmux
+sudo
+vim
+htop
+figlet
+jq
+npm
+nodejs
+curl

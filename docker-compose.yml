@@ -1,0 +1,21 @@
+# This is an example DC file
+version: "2.3"
+
+services:
+  dldocker:
+#    runtime: nvidia
+    image: tornermarton/dldocker:latest
+    container_name: dldocker-example
+    hostname: dldocker
+    ports:
+    - "7722:22"
+    - "7730:3000"
+    tty: true
+    environment:
+    - CUDA_VISIBLE_DEVICES=0
+    - NODE_ENV=container
+    restart: unless-stopped
+    volumes:
+    - .:/app
+    - ../data:/data
+    - ../datasets:/datasets

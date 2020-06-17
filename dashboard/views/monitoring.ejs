@@ -1,0 +1,61 @@
+<div>
+    <div class="card">
+        <div class="card-body row">
+            <h5 class="card-title col-12">CPU - <%= monitoring.cpu.manufacturer %> <%= monitoring.cpu.brand %>
+                @<%= monitoring.cpu.speed %>GHz</h5>
+            <h6 class="card-subtitle mb-2 text-muted col-12">Cores: <%= monitoring.cpu.physicalCores %>
+                (<%= monitoring.cpu.cores %> threads)</h6>
+            <% for (let i = 0; i < monitoring.cpu.cores; ++i){ %>
+            <div class="col-md-6 p-2">
+                <div id="cpu-<%= i %>-progress" class="m-auto">0 %</div>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                         aria-valuemax="100" id="cpu-<%= i %>-progressbar"></div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <div class="card mt-2">
+        <div class="card-body row">
+            <h5 class="card-title col-12">RAM</h5>
+            <% let mem_total = (monitoring.mem.total/1024/1024/1024).toFixed(2) %>
+            <% let mem_used = (monitoring.mem.used/1024/1024/1024).toFixed(2) %>
+            <% let mem_free = (monitoring.mem.free/1024/1024/1024).toFixed(2) %>
+            <% let mem_percent = (mem_used/mem_total*100).toFixed(2)%>
+            <h6 class="card-subtitle mb-2 text-muted col-12">Total: <span id="mem-total"><%= mem_total %></span>GB </h6>
+            <h6 class="card-subtitle mb-2 text-muted col-12">Used: <span id="mem-used"><%= mem_used %></span>GB </h6>
+            <h6 class="card-subtitle mb-2 text-muted col-12">Free: <span id="mem-free"><%= mem_free %></span>GB </h6>
+            <div class="col-12 p-2">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="<%= mem_percent%>" aria-valuemin="0"
+                         aria-valuemax="100" id="mem-progressbar"><% mem_percent %> %</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% for (let i = 0; i < monitoring.gpus.length; ++i){
+        let gpu = monitoring.gpus[i];
+        if (gpu.name !== "") {
+    %>
+    <div class="card mt-2">
+        <div class="card-body row">
+            <h5 class="card-title col-12"><%= gpu.name %></h5>
+            <div class="col-12 p-2">
+                <div>GPU utilization</div>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                         aria-valuemax="100" id="gpu-<%= i %>-load-progressbar">0 %</div>
+                </div>
+            </div>
+            <div class="col-12 p-2">
+                <div>Memory utilization</div>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                         aria-valuemax="100" id="gpu-<%= i %>-vram-progressbar">0 %</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }} %>
+</div>
