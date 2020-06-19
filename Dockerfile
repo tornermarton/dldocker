@@ -48,10 +48,12 @@ RUN chown -R dld-user:dld-user /home/dld-user/
 RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh;   \
     bash Miniconda3-latest-Linux-x86_64.sh -b -p /usr/miniconda3
 ENV PATH="/usr/miniconda3/bin:${PATH}"
+RUN echo PYTHONPATH="${PYTHONPATH}:/home/dld-user/code" >> /root/.bashrc
 RUN conda init bash
 # Init miniconda for dld-user
 USER dld-user
 ENV PATH="/usr/miniconda3/bin:${PATH}"
+RUN echo PYTHONPATH="${PYTHONPATH}:/home/dld-user/code" >> /home/dld-user/.bashrc
 RUN conda init bash
 USER root
 
