@@ -12,11 +12,11 @@ RUN mkdir /data         \
           /resources
 
 # Install system packages
-COPY ./resources/requirements.system /resources/requirements.system
-RUN apt -q update --fix-missing; xargs apt -q install -y < /resources/requirements.system
+COPY resources/system_requirements.txt /resources/system_requirements.txt
+RUN apt -q update --fix-missing; xargs apt -q install -y < /resources/system_requirements.txt
 
 # Copy supervisord base configuration
-COPY ./resources/supervisord.conf /etc/supervisor.conf
+COPY ./resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Remove login messages
 RUN chmod -x /etc/update-motd.d/*
@@ -27,7 +27,7 @@ RUN mkdir /var/run/sshd;                                                        
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd;  \
     echo "export VISIBLE=now" >> /etc/profile
 ENV NOTVISIBLE "in users profile"
-COPY resources/sshd.sv.conf /etc/supervisor/conf.d/sshd.sv.conf
+COPY ./resources/sshd.sv.conf /etc/supervisor/conf.d/sshd.sv.conf
 
 # Change the initial root password
 # !!!IMPORTANT: PASSWORD MUST BE CHANGED IMMIDIATELY AFTER FIRST LOGIN!!!
@@ -62,10 +62,10 @@ USER root
 
 # Dashboard
 COPY ./dashboard/ /dashboard/
-COPY resources/dashboard.sv.conf /etc/supervisor/conf.d/dashboard.sv.conf
+COPY ./resources/dashboard.sv.conf /etc/supervisor/conf.d/dashboard.sv.conf
 
 EXPOSE 3000
 EXPOSE 22
 
 # Do not override this without calling this command eventually
-ENTRYPOINT ["supervisord", "-c", "/etc/supervisor.conf"]
+ENTRYPOINT ["/usr/bin/supervisord"]

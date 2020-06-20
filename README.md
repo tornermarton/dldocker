@@ -18,7 +18,7 @@ To run the container use the following command:
 
 ```bash
 docker run -d                   \
--p 3000:3000 -p 7722:22           \
+-p 3000:3000 -p 7722:22         \
 --name dldocker-example         \
 tornermarton/dldocker:latest
 ```
