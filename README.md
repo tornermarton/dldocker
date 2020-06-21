@@ -75,6 +75,13 @@ Miniconda3 is installed on the container (and a base env).
 If you need help to create and use your own environment please read:
 [https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
 
+After installing a new conda env please run the following commands to add the code directory to sys.path (so the module inside it can be imported):
+```bash
+su
+conda activate [ENV_NAME]
+conda develop /home/dld-user/code/
+```
+
 ### Adding services to supervisord
 
 If you want to adda new service to supervisord to run in in the background (e.g. Jupyter Notebook) 
