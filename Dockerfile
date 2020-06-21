@@ -48,9 +48,9 @@ RUN chown -R dld-user:dld-user /home/dld-user/
 RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh;   \
     bash Miniconda3-latest-Linux-x86_64.sh -b -p /usr/miniconda3
 ENV PATH="/usr/miniconda3/bin:${PATH}"
-RUN conda init bash                     \
-    conda install conda-build           \
-    conda develop /home/dld-user/code/ --name
+RUN conda init bash;                     \
+    conda install conda-build;          \
+    conda develop /home/dld-user/code/ --name base
 # Init miniconda for dld-user
 USER dld-user
 ENV PATH="/usr/miniconda3/bin:${PATH}"
